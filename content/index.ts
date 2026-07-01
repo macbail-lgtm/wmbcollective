@@ -215,38 +215,44 @@ export const CURRICULUM_PAGE = {
 
 export const ABOUT_PAGE = {
   header: "About",
+  subtext: "A media platform by the Wharton Music Business Club",
   whoWeAre: {
     title: "Who We Are",
-    body: "WMB Collective is a production of Music Business at Wharton x Mac Bailey. We cover the business behind the culture — music, sports, media, entertainment. Not the headlines. The mechanics underneath them.",
+    body: "WMB Collective is the official media platform of the Wharton Music Business Club at the University of Pennsylvania. We exist to give students, young professionals, and anyone passionate about music and entertainment the access, knowledge, and resources they need to break into the industry — and build a career they actually want.\n\nThe music and entertainment industry is one of the hardest to crack. It runs on relationships, insider knowledge, and access that most people never get. WMB Collective is here to change that.",
   },
-  whatWeCover: {
-    title: "What We Cover",
+  whatWeDo: {
+    title: "What We Do",
     items: [
       {
-        title: "Music",
-        description: "The shift from labels to direct-to-fan infrastructure",
-      },
-      {
-        title: "Sports",
-        description: "Media rights, athlete branding, league business",
-      },
-      {
-        title: "Entertainment",
-        description: "The new economics of content, attention, and IP",
-      },
-      {
-        title: "Media",
+        title: "The Vault",
         description:
-          "The platforms redefining how stories get told and monetized",
+          "Long-form interviews with the executives, agents, managers, and founders building the industry.",
+      },
+      {
+        title: "Open Session",
+        description:
+          "Live educational talks and panel discussions, streamed and archived for anyone to watch.",
+      },
+      {
+        title: "Release Radar",
+        description: "Stay current on what's dropping across music and entertainment.",
+      },
+      {
+        title: "The Curriculum",
+        description:
+          "Vetted books, podcasts, courses, and guides to accelerate your path into the industry.",
       },
     ],
   },
-  forStudents: {
-    title: "For Students and Professionals",
-    body: "WMB Collective is built for the next generation — college students, young professionals, and anyone with a passion for music and entertainment who's serious about turning that passion into a career. Breaking into this industry is hard. The doors aren't always visible and the path is rarely straightforward. We exist to change that. Through interviews with industry insiders, educational talks, curated resources, and real job opportunities, WMB Collective gives you the tools, the knowledge, and the connections to find your way in — and thrive once you get there.",
+  whoItsFor: {
+    title: "Who It's For",
+    body: "WMB Collective is built for the next generation — college students, young professionals, and anyone serious about turning their passion for music and entertainment into a career. Whether you're a freshman figuring out where to start or a recent grad ready to make your move, this platform was built for you.\n\nNo gatekeeping. No fluff. Just real access to the people, knowledge, and opportunities that matter.",
   },
   whereItsGoing: {
     title: "Where It's Going",
-    body: "The old gatekeepers are losing their grip. Creators are building direct relationships with audiences. WMB Collective exists to track that shift in real time — through conversations with the people building what's next.",
+    body: "The old gatekeepers are losing their grip. Creators are building direct relationships with their audiences. New platforms, new IP, and new business models are reshaping music, sports, and entertainment from the ground up. WMB Collective exists to track that shift in real time — through conversations with the people building what's next.",
   },
+  calloutText:
+    "Penn student interested in music and entertainment? Join the Wharton Music Business Club here →",
+  calloutHref: "https://pennclubs.com/club/wharton-music-business-club/",
 };

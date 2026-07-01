@@ -7,7 +7,7 @@ const LOGO_WIDTH = 1705;
 const LOGO_HEIGHT = 922;
 
 type LogoProps = {
-  // "hero" = large logo with speed lines, used on the landing page.
+  // "hero" = large centered logo, used on the landing page.
   // "nav" = smaller logo, used top-left in the sticky nav on inner pages.
   variant: "hero" | "nav";
 };
@@ -29,19 +29,7 @@ export default function Logo({ variant }: LogoProps) {
   }
 
   return (
-    <div className="relative flex items-center justify-center bg-white">
-      <div
-        className="pointer-events-none absolute -left-16 top-1/2 hidden -translate-y-1/2 flex-col gap-1.5 sm:flex md:-left-24"
-        aria-hidden="true"
-      >
-        {[64, 48, 32, 16].map((width, i) => (
-          <span
-            key={width}
-            className="speed-line h-[3px] rounded-full bg-red"
-            style={{ width, animationDelay: `${i * 0.08}s` }}
-          />
-        ))}
-      </div>
+    <div className="flex items-center justify-center bg-white">
       <Image
         src="/images/logo.png"
         alt="WMB Collective"

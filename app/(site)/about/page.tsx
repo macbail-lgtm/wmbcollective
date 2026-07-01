@@ -1,7 +1,23 @@
 import type { Metadata } from "next";
-import { ABOUT_PAGE, FOOTER } from "@/content";
+import { ABOUT_PAGE } from "@/content";
 
 export const metadata: Metadata = { title: "About | WMB Collective" };
+
+// Renders a body string as separate paragraphs, split on blank lines.
+function Paragraphs({ text }: { text: string }) {
+  return (
+    <>
+      {text.split("\n\n").map((paragraph, i) => (
+        <p
+          key={i}
+          className="mt-4 max-w-3xl font-body text-base font-light leading-relaxed text-gray-500"
+        >
+          {paragraph}
+        </p>
+      ))}
+    </>
+  );
+}
 
 export default function AboutPage() {
   return (
@@ -9,22 +25,23 @@ export default function AboutPage() {
       <h1 className="font-display italic font-black text-navy text-4xl sm:text-5xl">
         {ABOUT_PAGE.header}
       </h1>
+      <p className="mt-3 font-body text-sm font-light tracking-wide text-gray-400">
+        {ABOUT_PAGE.subtext}
+      </p>
 
       <section className="mt-14">
         <h2 className="font-display italic font-black text-navy text-xl sm:text-2xl">
           {ABOUT_PAGE.whoWeAre.title}
         </h2>
-        <p className="mt-4 max-w-3xl font-body text-base font-light leading-relaxed text-gray-500">
-          {ABOUT_PAGE.whoWeAre.body}
-        </p>
+        <Paragraphs text={ABOUT_PAGE.whoWeAre.body} />
       </section>
 
       <section className="mt-14">
         <h2 className="font-display italic font-black text-navy text-xl sm:text-2xl">
-          {ABOUT_PAGE.whatWeCover.title}
+          {ABOUT_PAGE.whatWeDo.title}
         </h2>
         <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2">
-          {ABOUT_PAGE.whatWeCover.items.map((item) => (
+          {ABOUT_PAGE.whatWeDo.items.map((item) => (
             <div key={item.title} className="border-l-2 border-red pl-4">
               <h3 className="font-display italic font-black text-navy text-base">
                 {item.title}
@@ -39,29 +56,25 @@ export default function AboutPage() {
 
       <section className="mt-14">
         <h2 className="font-display italic font-black text-navy text-xl sm:text-2xl">
-          {ABOUT_PAGE.forStudents.title}
+          {ABOUT_PAGE.whoItsFor.title}
         </h2>
-        <p className="mt-4 max-w-3xl font-body text-base font-light leading-relaxed text-gray-500">
-          {ABOUT_PAGE.forStudents.body}
-        </p>
+        <Paragraphs text={ABOUT_PAGE.whoItsFor.body} />
       </section>
 
       <section className="mt-14">
         <h2 className="font-display italic font-black text-navy text-xl sm:text-2xl">
           {ABOUT_PAGE.whereItsGoing.title}
         </h2>
-        <p className="mt-4 max-w-3xl font-body text-base font-light leading-relaxed text-gray-500">
-          {ABOUT_PAGE.whereItsGoing.body}
-        </p>
+        <Paragraphs text={ABOUT_PAGE.whereItsGoing.body} />
       </section>
 
       <a
-        href={FOOTER.joinClubHref}
+        href={ABOUT_PAGE.calloutHref}
         target="_blank"
         rel="noopener noreferrer"
         className="mt-16 block border border-red px-8 py-6 text-center font-body text-sm tracking-wide text-red transition-colors hover:bg-hover"
       >
-        {FOOTER.joinClubText}
+        {ABOUT_PAGE.calloutText}
       </a>
     </main>
   );
