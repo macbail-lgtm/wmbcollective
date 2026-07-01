@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
-import VideoCard from "@/components/VideoCard";
+// import VideoCard from "@/components/VideoCard";
 import { OPEN_SESSION_PAGE } from "@/content";
 
 export const metadata: Metadata = { title: "Open Session | WMB Collective" };
 
-// Archived talks grid — replace with YouTube Data API v3 results by calling
-// getPlaylistVideos(process.env.YOUTUBE_OPENSESSION_PLAYLIST_ID) from
-// lib/youtube.ts once YOUTUBE_OPENSESSION_PLAYLIST_ID is set in .env.local.
 export default function OpenSessionPage() {
   return (
     <main className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
@@ -17,12 +14,16 @@ export default function OpenSessionPage() {
         {OPEN_SESSION_PAGE.subtext}
       </p>
 
-      <div className="mt-10 bg-red px-6 py-6 text-center sm:px-10">
-        <p className="font-display italic font-black text-white text-lg sm:text-xl">
-          {OPEN_SESSION_PAGE.banner}
+      <div className="py-24 text-center">
+        <p className="font-body text-sm font-light tracking-wide text-gray-400">
+          Sessions coming soon.
+          <br />
+          Stay tuned for live talks and panels.
         </p>
       </div>
 
+      {/* TODO: Add YOUTUBE_OPENSESSION_PLAYLIST_ID to .env.local to populate this grid with archived sessions */}
+      {/*
       <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
         {OPEN_SESSION_PAGE.talks.map((talk, i) => (
           <VideoCard
@@ -33,6 +34,7 @@ export default function OpenSessionPage() {
           />
         ))}
       </div>
+      */}
     </main>
   );
 }

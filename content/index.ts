@@ -1,6 +1,8 @@
 // All static site copy lives here. Edit this file to update content
 // across the site without touching component/page code.
 
+import type { RadarRelease } from "@/lib/radar";
+
 export type NavLink = {
   label: string;
   href: string;
@@ -145,29 +147,34 @@ export const OPEN_SESSION_PAGE = {
   ] as PlaceholderVideo[],
 };
 
-export type PlaceholderRelease = {
-  artist: string;
-  title: string;
-  format: "Album" | "EP" | "Single";
-};
-
 export const RADAR_PAGE = {
   header: "Release Radar",
   subtext: "What's dropping",
-  releases: [
-    { artist: "Artist: TBA", title: "Title: TBA", format: "Album" },
-    { artist: "Artist: TBA", title: "Title: TBA", format: "EP" },
-    { artist: "Artist: TBA", title: "Title: TBA", format: "Single" },
-    { artist: "Artist: TBA", title: "Title: TBA", format: "Album" },
-    { artist: "Artist: TBA", title: "Title: TBA", format: "EP" },
-    { artist: "Artist: TBA", title: "Title: TBA", format: "Single" },
-  ] as PlaceholderRelease[],
 };
 
+// Shown when the live Metacritic fetch (see app/api/radar/route.ts) comes
+// back empty or errors, so the page is never blank.
+export const RADAR_FALLBACK_RELEASES: RadarRelease[] = [
+  { artist: "Coming Soon", title: "TBA", date: "2026", format: "Album" as const },
+  { artist: "Coming Soon", title: "TBA", date: "2026", format: "EP" as const },
+  { artist: "Coming Soon", title: "TBA", date: "2026", format: "Single" as const },
+].map((release) => ({
+  ...release,
+  coverImage: "",
+  genre: "",
+  metacriticUrl: "",
+}));
+
 export type ResourceCard = {
+  // Empty string means no accessible cover image was found — the card
+  // renders a gray placeholder instead. See the TODO next to each entry
+  // below for where to source a real one.
+  coverImage: string;
   title: string;
   author: string;
   blurb: string;
+  buttonText: string;
+  buttonHref: string;
 };
 
 export const CURRICULUM_PAGE = {
@@ -186,29 +193,53 @@ export const CURRICULUM_PAGE = {
   },
   resources: [
     {
-      title: "Resource Title TBA",
-      author: "Author TBA",
-      blurb: "Description of this resource goes here.",
+      // TODO: Amazon blocks scraping and Open Library has no cover on file
+      // for the English edition — replace with a real cover once available.
+      coverImage: "",
+      title: "The Spotify Play",
+      author: "Sven Carlsson & Jonas Leijonhufvud",
+      blurb:
+        "The inside story of how Daniel Ek built Spotify into the world's dominant music streaming platform — beating Apple, Google, and Amazon in the process. Essential reading for anyone who wants to understand how the streaming era reshaped the music industry, what it took to get the major labels to sign on, and how one company rewrote the rules of how music is distributed and monetized. If streaming is the business model, this is how it was won.",
+      buttonText: "Buy on Amazon →",
+      buttonHref: "https://www.amazon.com/dp/163576744X",
     },
     {
-      title: "Resource Title TBA",
-      author: "Author TBA",
-      blurb: "Description of this resource goes here.",
+      coverImage: "/images/powerhouse.jpg",
+      title: "Powerhouse",
+      author: "James Andrew Miller",
+      blurb:
+        "The definitive oral history of Creative Artists Agency — the talent agency that rewrote the rules of Hollywood and the entertainment business. Built by five agents who left William Morris in 1975, CAA went on to represent the biggest names in film, television, music, and sports while reshaping how deals get made across the entire industry. If you want to understand how power, relationships, and leverage actually work in entertainment, this is the book. Required reading for anyone headed into talent representation, management, or the business side of media.",
+      buttonText: "Buy on Amazon →",
+      buttonHref:
+        "https://www.amazon.com/Powerhouse-Untold-Hollywoods-Creative-Artists/dp/0062441388",
     },
     {
-      title: "Resource Title TBA",
-      author: "Author TBA",
-      blurb: "Description of this resource goes here.",
+      coverImage: "/images/hit-men.jpg",
+      title: "Hit Men",
+      author: "Fredric Dannen",
+      blurb:
+        "A raw, investigative deep-dive into the power brokers who ran the American music industry during its wildest decades — the payola, the backroom deals, the egos, and the organized crime connections. Dannen traces the rise of the major labels from Tin Pan Alley to the CD era, exposing how hits were made and who really controlled the charts. Ranked second on Billboard's list of the 100 Greatest Music Books of All Time. If you want to understand where the industry's power structures came from, start here.",
+      buttonText: "Buy on Amazon →",
+      buttonHref: "https://www.amazon.com/Hit-Men-Brokers-Inside-Business/dp/0679730613",
     },
     {
-      title: "Resource Title TBA",
-      author: "Author TBA",
-      blurb: "Description of this resource goes here.",
+      coverImage: "/images/how-music-works.jpg",
+      title: "How Music Works",
+      author: "David Byrne",
+      blurb:
+        "Talking Heads founder David Byrne breaks down music from every angle — its history, its business, its technology, and its culture. From how recording technology changed the way we create and consume music, to how venues shape the sounds that get made in them, to the economics of the modern music industry, Byrne covers it all with the perspective of someone who has lived it. Part autobiography, part music theory, part industry manual — and one of the most illuminating books ever written about what music actually is and how it functions in the world.",
+      buttonText: "Buy on Amazon →",
+      buttonHref: "https://www.amazon.com/How-Music-Works-David-Byrne/dp/0804188939",
     },
     {
-      title: "Resource Title TBA",
-      author: "Author TBA",
-      blurb: "Description of this resource goes here.",
+      coverImage: "/images/master-switch.jpg",
+      title: "The Master Switch",
+      author: "Tim Wu",
+      blurb:
+        "Columbia Law professor Tim Wu traces the history of every major information industry — telephone, radio, film, television, and the internet — and reveals a consistent pattern: every open, chaotic medium eventually gets captured by a monopoly. The question he asks is whether the internet will follow the same fate. For anyone in music or entertainment who wants to understand the structural forces shaping streaming, platform power, and the future of media distribution, this book is the framework. Wu coined the term 'net neutrality' — and this is where he explains why it matters.",
+      buttonText: "Buy on Amazon →",
+      buttonHref:
+        "https://www.amazon.com/Master-Switch-Rise-Information-Empires/dp/0307390993",
     },
   ] as ResourceCard[],
 };
