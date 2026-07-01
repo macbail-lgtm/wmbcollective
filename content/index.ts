@@ -62,12 +62,12 @@ export const LANDING_SECTIONS: LandingSection[] = [
 ];
 
 export const FOOTER = {
-  copyright: "© 2025 WMB Collective",
-  linkedinHref: "#",
-  instagramHref: "#",
-  instagramHandle: "@wmbcollective",
-  joinClubText: "Penn student interested in music and entertainment? Join the club here →",
-  joinClubHref: "#",
+  linkedinHref:
+    "https://www.linkedin.com/company/music-business-at-penn/posts/?feedView=all",
+  instagramHref: "https://www.instagram.com/mbupenn/",
+  joinClubText:
+    "Penn student interested in music and entertainment? Join the club here →",
+  joinClubHref: "https://pennclubs.com/club/wharton-music-business-club/",
 };
 
 export type PlaceholderVideo = {
@@ -93,7 +93,7 @@ export const VAULT_PAGE = {
       description: "What it takes to run a label without major backing.",
     },
     {
-      title: "Episode 03 — Touring in 2025",
+      title: "Episode 03 — Touring in 2026",
       guest: "Guest Name TBA",
       description: "Tour economics, routing, and the modern live business.",
     },
@@ -175,8 +175,7 @@ export const CURRICULUM_PAGE = {
   subtext: "Everything you need to know",
   holyGrail: {
     badge: "THE HOLY GRAIL",
-    coverImage:
-      "https://m.media-amazon.com/images/I/71oIRNAp+sL._AC_UY218_.jpg",
+    coverImage: "/images/passman-book.jpg",
     title: "All You Need to Know About the Music Business",
     author: "Donald S. Passman",
     blurb:

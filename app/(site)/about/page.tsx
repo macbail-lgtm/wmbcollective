@@ -57,6 +57,8 @@ export default function AboutPage() {
 
       <a
         href={FOOTER.joinClubHref}
+        target="_blank"
+        rel="noopener noreferrer"
         className="mt-16 block border border-red px-8 py-6 text-center font-body text-sm tracking-wide text-red transition-colors hover:bg-hover"
       >
         {FOOTER.joinClubText}
