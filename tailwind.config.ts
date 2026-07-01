@@ -9,8 +9,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        navy: "#0D1F3C",
+        red: "#C0152A",
+        border: "#E0E0E0",
+        hover: "#fafafa",
+      },
+      fontFamily: {
+        display: ["'Arial Black'", "Arial Black", "Arial", "sans-serif"],
+        body: ["Arial", "Helvetica", "sans-serif"],
+      },
+      letterSpacing: {
+        widest2: "0.25em",
       },
     },
   },

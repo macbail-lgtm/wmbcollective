@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WMB Collective
 
-## Getting Started
+WMB Collective is a production of Music Business at Wharton x Mac Bailey. The
+site covers the business behind the culture — music, sports, media, and
+entertainment — through long-form interviews, live talks, release tracking,
+curated learning resources, and job listings for students and young
+professionals breaking into the industry.
 
-First, run the development server:
+- **Live site:** https://wmbcollective.com
+- **Vercel:** https://wmbcollective.vercel.app
+- **Repo:** https://github.com/macbail-lgtm/wmbcollective
+
+## Tech stack
+
+- [Next.js 14](https://nextjs.org) (App Router)
+- TypeScript
+- Tailwind CSS
+- YouTube Data API v3 (for video embeds, once activated — see below)
+- Deployed on Vercel, auto-deploying from `main`
+
+## Running locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+/app          — pages, using the App Router (route group `(site)` wraps
+                 all inner pages with the shared nav + footer; the landing
+                 page at app/page.tsx is intentionally outside that group)
+/components   — one component per file
+/content      — content/index.ts: every piece of static copy on the site
+/lib          — lib/youtube.ts: YouTube Data API v3 helper (inactive
+                 until env vars are set)
+```
 
-## Learn More
+## Updating content
 
-To learn more about Next.js, take a look at the following resources:
+Almost everything on the site — section descriptions, placeholder cards,
+footer links, the About page copy, the Curriculum page's Holy Grail book,
+etc. — lives in [`content/index.ts`](content/index.ts) as exported
+constants. Edit that file and the change will show up everywhere it's used;
+you shouldn't need to touch page or component files for a copy update.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To point a placeholder link (LinkedIn, Instagram, "Join the club") at a real
+URL, update the `FOOTER` object in that same file.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Activating the YouTube API
 
-## Deploy on Vercel
+The Vault and Open Session pages currently render hardcoded placeholder
+cards. To pull real videos from YouTube playlists instead:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Get a YouTube Data API v3 key from the
+   [Google Cloud Console](https://console.cloud.google.com/apis/library/youtube.googleapis.com).
+2. Find the playlist IDs for your Vault and Open Session content on YouTube.
+3. Add the values to `.env.local` (for local dev) and to your Vercel
+   project's Environment Variables (for production):
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   ```
+   YOUTUBE_API_KEY=your_api_key
+   YOUTUBE_VAULT_PLAYLIST_ID=your_vault_playlist_id
+   YOUTUBE_OPENSESSION_PLAYLIST_ID=your_open_session_playlist_id
+   ```
+
+4. In `app/(site)/vault/page.tsx` and `app/(site)/open-session/page.tsx`,
+   call `getPlaylistVideos()` from [`lib/youtube.ts`](lib/youtube.ts) with
+   the corresponding env var and render its results instead of the
+   placeholder arrays from `content/index.ts`. `getPlaylistVideos` already
+   handles the fetch, and returns an empty array if the key/playlist ID
+   isn't set, so you can wire it up without breaking the page.
+
+## Deploying to Vercel
+
+The project auto-deploys to Vercel on every push to `main`:
+
+```bash
+git add .
+git commit -m "your message"
+git push origin main
+```
+
+Vercel picks up the push, builds, and deploys automatically — no manual
+steps needed. Preview deployments are created automatically for any other
+branch or pull request.
+
+If you ever need to (re)connect the repo to Vercel from scratch:
+
+1. Go to [vercel.com/new](https://vercel.com/new) and import
+   `macbail-lgtm/wmbcollective` from GitHub.
+2. Framework preset: Next.js (auto-detected). Leave build settings as
+   default.
+3. Add the YouTube env vars (see above) under **Settings → Environment
+   Variables** if/when you activate the API.
+4. Deploy. The project will be live at `wmbcollective.vercel.app`.
+
+## Connecting wmbcollective.com
+
+1. In the Vercel dashboard, open the project → **Settings → Domains**.
+2. Add `wmbcollective.com` (and `www.wmbcollective.com` if you want the
+   `www` subdomain too).
+3. Vercel will show you DNS records to add at your domain registrar:
+   - Usually an `A` record for the apex domain (`wmbcollective.com`)
+     pointing at Vercel's IP, and/or
+   - A `CNAME` record for `www` pointing at `cname.vercel-dns.com`.
+4. Add those records in your registrar's DNS settings. Propagation can take
+   anywhere from a few minutes to a few hours.
+5. Vercel automatically issues and renews an SSL certificate once DNS
+   verifies.
+
+## Adding a contributor
+
+**GitHub:**
+
+1. Go to the repo → **Settings → Collaborators**.
+2. Click **Add people** and invite them by GitHub username or email.
+3. They'll get an invite to accept before they can push.
+
+**Vercel:**
+
+1. Go to the Vercel team/project → **Settings → Members** (or **Team →
+   Invite Member** if using a team account).
+2. Invite by email and assign a role (Member is enough to view deployments
+   and env vars; Admin can change project settings).
+3. Anyone with GitHub push access to `main` will trigger deployments
+   automatically once they're pushing to the connected repo — Vercel
+   membership is only needed if they also need dashboard access.

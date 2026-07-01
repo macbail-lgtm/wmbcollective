@@ -4,24 +4,40 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --foreground: #0d1f3c;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  font-weight: 300;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Thin outlined wordmark used for "COLLECTIVE" in the logo. */
+  .text-navy-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px #0d1f3c;
+  }
+}
+
+@keyframes speedLineIn {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.speed-line {
+  opacity: 0;
+  animation: speedLineIn 0.6s ease-out forwards;
 }
