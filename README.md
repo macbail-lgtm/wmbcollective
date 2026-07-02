@@ -36,7 +36,8 @@ Open [http://localhost:3000](http://localhost:3000).
 /components   — one component per file
 /content      — content/index.ts: every piece of static copy on the site
 /lib          — lib/youtube.ts: YouTube Data API v3 helper (inactive
-                 until env vars are set)
+                 until env vars are set); lib/notionJobs.ts and
+                 lib/greenhouseJobs.ts: Job Board data sources (see below)
 ```
 
 ## Updating content
@@ -73,6 +74,34 @@ cards. To pull real videos from YouTube playlists instead:
    placeholder arrays from `content/index.ts`. `getPlaylistVideos` already
    handles the fetch, and returns an empty array if the key/playlist ID
    isn't set, so you can wire it up without breaking the page.
+
+## Job Board
+
+The Job Board at `/jobs` combines two sources: jobs added manually in Notion,
+and jobs pulled automatically from public Greenhouse job boards at music and
+entertainment companies. See `app/api/jobs`, `app/api/greenhouse`, and
+`app/api/all-jobs` for the fetch/merge logic.
+
+### Adding a job manually (Notion)
+
+1. Go to notion.so and open the WMB Collective Job Board database.
+2. Click **New** to add a row.
+3. Fill in: Role, Company, Location, Type, Link.
+4. Check the **Active** checkbox to make it live.
+5. It appears on the site within 1 hour automatically.
+
+Requires `NOTION_API_KEY` and `NOTION_JOBS_DATABASE_ID` to be set in
+`.env.local` (and in Vercel's Environment Variables for production).
+
+### Greenhouse jobs
+
+Jobs from Spotify, Live Nation, Warner, Universal, and other companies on the
+list in `lib/greenhouseJobs.ts` are pulled automatically every 3 hours — no
+manual action needed, and no API key required. Not every company on that
+list actually has a public Greenhouse board under the token listed; boards
+that 404 or error are skipped silently, so it's safe to add more companies
+to the list without breaking the page if a token turns out to be wrong. To
+add a company, add its Greenhouse board token to the `COMPANIES` array.
 
 ## Deploying to Vercel
 

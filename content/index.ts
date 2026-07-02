@@ -11,6 +11,7 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Open Session", href: "/open-session" },
   { label: "Release Radar", href: "/radar" },
   { label: "The Curriculum", href: "/curriculum" },
+  { label: "Job Board", href: "/jobs" },
   { label: "About", href: "/about" },
 ];
 
@@ -47,11 +48,10 @@ export const LANDING_SECTIONS: LandingSection[] = [
     href: "/curriculum",
   },
   {
-    // No dedicated page spec'd yet — placeholder href until /jobs is built.
     number: "05",
     title: "Job Board",
     description: "Music and entertainment internships and roles",
-    href: "#",
+    href: "/jobs",
   },
   {
     number: "06",
@@ -148,6 +148,15 @@ export const OPEN_SESSION_PAGE = {
 export const RADAR_PAGE = {
   header: "Release Radar",
   subtext: "New music and what's coming.",
+};
+
+export const JOBS_PAGE = {
+  header: "Job Board",
+  subtext: "Music and entertainment opportunities — internships and full-time roles",
+  emptyMessage: "No listings right now. Check back soon.",
+  emptyCalloutText: "Know a role we should add? DM us on Instagram →",
+  footerCalloutText: "Know of a role we should add? Send it to us → @mbupenn",
+  instagramHref: "https://www.instagram.com/mbupenn/",
 };
 
 export type UpcomingRelease = {
