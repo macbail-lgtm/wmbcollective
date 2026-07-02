@@ -38,10 +38,17 @@ export default function AboutPage() {
 
       <section className="mt-14">
         <h2 className="font-display italic font-black text-navy text-xl sm:text-2xl">
-          {ABOUT_PAGE.whatWeDo.title}
+          {ABOUT_PAGE.whatWeBuiltItFor.title}
+        </h2>
+        <Paragraphs text={ABOUT_PAGE.whatWeBuiltItFor.body} />
+      </section>
+
+      <section className="mt-14">
+        <h2 className="font-display italic font-black text-navy text-xl sm:text-2xl">
+          {ABOUT_PAGE.whatWeCover.title}
         </h2>
         <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2">
-          {ABOUT_PAGE.whatWeDo.items.map((item) => (
+          {ABOUT_PAGE.whatWeCover.items.map((item) => (
             <div key={item.title} className="border-l-2 border-red pl-4">
               <h3 className="font-display italic font-black text-navy text-base">
                 {item.title}
@@ -56,16 +63,9 @@ export default function AboutPage() {
 
       <section className="mt-14">
         <h2 className="font-display italic font-black text-navy text-xl sm:text-2xl">
-          {ABOUT_PAGE.whoItsFor.title}
+          {ABOUT_PAGE.theClub.title}
         </h2>
-        <Paragraphs text={ABOUT_PAGE.whoItsFor.body} />
-      </section>
-
-      <section className="mt-14">
-        <h2 className="font-display italic font-black text-navy text-xl sm:text-2xl">
-          {ABOUT_PAGE.whereItsGoing.title}
-        </h2>
-        <Paragraphs text={ABOUT_PAGE.whereItsGoing.body} />
+        <Paragraphs text={ABOUT_PAGE.theClub.body} />
       </section>
 
       <a
