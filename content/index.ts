@@ -1,8 +1,6 @@
 // All static site copy lives here. Edit this file to update content
 // across the site without touching component/page code.
 
-import type { RadarRelease } from "@/lib/radar";
-
 export type NavLink = {
   label: string;
   href: string;
@@ -149,21 +147,52 @@ export const OPEN_SESSION_PAGE = {
 
 export const RADAR_PAGE = {
   header: "Release Radar",
-  subtext: "What's dropping",
+  subtext: "New music and what's coming.",
 };
 
-// Shown when the live Metacritic fetch (see app/api/radar/route.ts) comes
-// back empty or errors, so the page is never blank.
-export const RADAR_FALLBACK_RELEASES: RadarRelease[] = [
-  { artist: "Coming Soon", title: "TBA", date: "2026", format: "Album" as const },
-  { artist: "Coming Soon", title: "TBA", date: "2026", format: "EP" as const },
-  { artist: "Coming Soon", title: "TBA", date: "2026", format: "Single" as const },
-].map((release) => ({
-  ...release,
-  coverImage: "",
-  genre: "",
-  metacriticUrl: "",
-}));
+export type UpcomingRelease = {
+  artist: string;
+  title: string;
+  date: string;
+  format: "Album" | "EP" | "Single";
+  coverUrl: string;
+  spotifyLink: string;
+};
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// RELEASE RADAR — UPCOMING RELEASES
+// Edit this array to update the Dropping Soon section.
+// Fields: artist, title, date, format, coverUrl, spotifyLink
+// coverUrl: paste any image URL (album art, artist photo)
+// spotifyLink: paste the Spotify pre-save or album link
+// format: "Album" | "EP" | "Single"
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export const UPCOMING_RELEASES: UpcomingRelease[] = [
+  {
+    artist: "Coming Soon",
+    title: "TBA",
+    date: "2026",
+    format: "Album",
+    coverUrl: "",
+    spotifyLink: "",
+  },
+  {
+    artist: "Coming Soon",
+    title: "TBA",
+    date: "2026",
+    format: "EP",
+    coverUrl: "",
+    spotifyLink: "",
+  },
+  {
+    artist: "Coming Soon",
+    title: "TBA",
+    date: "2026",
+    format: "Single",
+    coverUrl: "",
+    spotifyLink: "",
+  },
+];
 
 export type ResourceCard = {
   // Empty string means no accessible cover image was found — the card
@@ -246,42 +275,43 @@ export const CURRICULUM_PAGE = {
 
 export const ABOUT_PAGE = {
   header: "About",
-  subtext: "A media platform by the Wharton Music Business Club",
+  subtext: "The media arm of the Wharton Music Business Club",
   whoWeAre: {
     title: "Who We Are",
-    body: "WMB Collective is the official media platform of the Wharton Music Business Club at the University of Pennsylvania. We exist to give students, young professionals, and anyone passionate about music and entertainment the access, knowledge, and resources they need to break into the industry — and build a career they actually want.\n\nThe music and entertainment industry is one of the hardest to crack. It runs on relationships, insider knowledge, and access that most people never get. WMB Collective is here to change that.",
+    body: "WMB Collective is the media platform of the Wharton Music Business Club at the University of Pennsylvania. We produce interviews, educational content, and curated resources focused on the music industry and the broader entertainment business.\n\nThis is a student-run operation — built by people who are passionate about music and serious about the business behind it.",
   },
-  whatWeDo: {
-    title: "What We Do",
+  whatWeBuiltItFor: {
+    title: "What We Built It For",
+    body: "Breaking into the music industry is hard. It runs on relationships and insider knowledge that most people never get access to. WMB Collective exists to close that gap.\n\nWhether you're a student trying to figure out where to start, a young professional looking to make a move, or just someone who loves music and wants to understand the business behind it — this platform was built for you. We compile the interviews, resources, job opportunities, and industry knowledge so you don't have to find it all yourself.",
+  },
+  whatWeCover: {
+    title: "What We Cover",
     items: [
       {
-        title: "The Vault",
+        title: "The Business of Music",
         description:
-          "Long-form interviews with the executives, agents, managers, and founders building the industry.",
+          "Labels, publishing, streaming, deals, and how the money actually moves.",
       },
       {
-        title: "Open Session",
+        title: "Talent & Representation",
         description:
-          "Live educational talks and panel discussions, streamed and archived for anyone to watch.",
+          "How artists, agents, managers and attorneys operate and build careers.",
       },
       {
-        title: "Release Radar",
-        description: "Stay current on what's dropping across music and entertainment.",
+        title: "Media & Entertainment",
+        description:
+          "The platforms, content models, and distribution systems reshaping the industry.",
       },
       {
-        title: "The Curriculum",
+        title: "Culture & Careers",
         description:
-          "Vetted books, podcasts, courses, and guides to accelerate your path into the industry.",
+          "What's changing, who's building what's next, and how to position yourself in it.",
       },
     ],
   },
-  whoItsFor: {
-    title: "Who It's For",
-    body: "WMB Collective is built for the next generation — college students, young professionals, and anyone serious about turning their passion for music and entertainment into a career. Whether you're a freshman figuring out where to start or a recent grad ready to make your move, this platform was built for you.\n\nNo gatekeeping. No fluff. Just real access to the people, knowledge, and opportunities that matter.",
-  },
-  whereItsGoing: {
-    title: "Where It's Going",
-    body: "The old gatekeepers are losing their grip. Creators are building direct relationships with their audiences. New platforms, new IP, and new business models are reshaping music, sports, and entertainment from the ground up. WMB Collective exists to track that shift in real time — through conversations with the people building what's next.",
+  theClub: {
+    title: "The Club",
+    body: "WMB Collective is produced by the Wharton Music Business Club — one of Penn's most active student organizations focused on the intersection of music, business, and culture. The club hosts industry speakers, facilitates networking, and gives students direct access to the people and companies shaping the music business.\n\nWMB Collective is our media platform — built to extend that access beyond our membership and share it with anyone who wants in.",
   },
   calloutText:
     "Penn student interested in music and entertainment? Join the Wharton Music Business Club here →",
