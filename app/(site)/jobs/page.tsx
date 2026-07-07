@@ -5,24 +5,18 @@ import JobCard from "@/components/JobCard";
 import { JOBS_PAGE } from "@/content";
 import type { Job, JobsResponse } from "@/lib/jobs";
 
-const FILTERS = [
-  "All",
-  "Internship",
-  "Full-time",
-  "Music",
-  "Agency",
-  "Marketing",
-  "Live Events",
-] as const;
+const FILTERS = ["All", "Internship", "Full-time"] as const;
 type Filter = (typeof FILTERS)[number];
 
 function matchesFilter(job: Job, filter: Filter): boolean {
   if (filter === "All") return true;
-  if (filter === "Internship" || filter === "Full-time") return job.type === filter;
-  // "Agency" is the filter label; the underlying ECN feed category is
-  // "Agency/Management".
-  if (filter === "Agency") return job.category === "Agency/Management";
-  return job.category === filter;
+  return job.type === filter;
+}
+
+function statsText(filter: Filter, count: number): string {
+  if (filter === "Internship") return `${count} internship${count === 1 ? "" : "s"}`;
+  if (filter === "Full-time") return `${count} full-time role${count === 1 ? "" : "s"}`;
+  return `${count} listing${count === 1 ? "" : "s"}`;
 }
 
 function SkeletonRow() {
@@ -92,6 +86,12 @@ export default function JobsPage() {
           </button>
         ))}
       </div>
+
+      {jobs !== null && !hadError && (
+        <p className="mt-3 font-body text-xs tracking-wide text-navy/50">
+          {statsText(filter, visibleJobs?.length ?? 0)}
+        </p>
+      )}
 
       <div className="mt-8">
         {jobs === null ? (

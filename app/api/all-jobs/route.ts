@@ -5,7 +5,7 @@ import { fetchEcnJobs } from "@/lib/ecnJobs";
 import type { Job, JobsResponse } from "@/lib/jobs";
 
 function dedupeKey(job: Job) {
-  return `${job.role.trim().toLowerCase()}::${job.company.trim().toLowerCase()}`;
+  return job.role.toLowerCase().trim() + job.company.toLowerCase().trim();
 }
 
 // Notion and Greenhouse listings don't carry a reliable posted date, so

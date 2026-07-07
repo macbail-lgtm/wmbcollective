@@ -137,7 +137,7 @@ export async function fetchEcnJobs(): Promise<Job[]> {
   const seen = new Set<string>();
   const jobs: Job[] = [];
   for (const job of allJobs) {
-    const key = `${job.role.trim().toLowerCase()}::${job.company.trim().toLowerCase()}`;
+    const key = job.role.toLowerCase().trim() + job.company.toLowerCase().trim();
     if (seen.has(key)) continue;
     seen.add(key);
     jobs.push(job);
