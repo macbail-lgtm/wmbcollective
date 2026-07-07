@@ -5,8 +5,25 @@ import JobCard from "@/components/JobCard";
 import { JOBS_PAGE } from "@/content";
 import type { Job, JobsResponse } from "@/lib/jobs";
 
-const FILTERS = ["All", "Internship", "Full-time"] as const;
+const FILTERS = [
+  "All",
+  "Internship",
+  "Full-time",
+  "Music",
+  "Agency",
+  "Marketing",
+  "Live Events",
+] as const;
 type Filter = (typeof FILTERS)[number];
+
+function matchesFilter(job: Job, filter: Filter): boolean {
+  if (filter === "All") return true;
+  if (filter === "Internship" || filter === "Full-time") return job.type === filter;
+  // "Agency" is the filter label; the underlying ECN feed category is
+  // "Agency/Management".
+  if (filter === "Agency") return job.category === "Agency/Management";
+  return job.category === filter;
+}
 
 function SkeletonRow() {
   return (
@@ -48,7 +65,7 @@ export default function JobsPage() {
   }, []);
 
   const visibleJobs =
-    jobs && filter !== "All" ? jobs.filter((job) => job.type === filter) : jobs;
+    jobs && filter !== "All" ? jobs.filter((job) => matchesFilter(job, filter)) : jobs;
 
   const showEmptyState = jobs !== null && (hadError || visibleJobs?.length === 0);
 
@@ -61,7 +78,7 @@ export default function JobsPage() {
         {JOBS_PAGE.subtext}
       </p>
 
-      <div className="mt-8 flex items-center gap-6">
+      <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
         {FILTERS.map((option) => (
           <button
             key={option}

@@ -30,6 +30,7 @@ export default function RadarPage() {
   const [hadError, setHadError] = useState(false);
   const [fetchedAt, setFetchedAt] = useState<string | null>(null);
   const [isFetching, setIsFetching] = useState(false);
+  const [usedFallback, setUsedFallback] = useState(false);
 
   const load = useCallback(async () => {
     setIsFetching(true);
@@ -39,10 +40,12 @@ export default function RadarPage() {
       setReleases(data.releases);
       setHadError(data.error);
       setFetchedAt(data.fetchedAt);
+      setUsedFallback(data.usedFallback);
     } catch {
       setReleases([]);
       setHadError(true);
       setFetchedAt(new Date().toISOString());
+      setUsedFallback(false);
     } finally {
       setIsFetching(false);
     }
@@ -108,6 +111,11 @@ export default function RadarPage() {
             <p className="mt-2 font-body text-sm font-light tracking-wide text-gray-400">
               What just dropped
             </p>
+            {usedFallback && (
+              <p className="mt-1 font-body text-xs italic text-gray-400">
+                Showing biggest releases from the past month
+              </p>
+            )}
           </div>
 
           <div className="flex items-center gap-2">

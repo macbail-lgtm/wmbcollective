@@ -15,4 +15,7 @@ export type RecentReleasesResponse = {
   releases: RecentRelease[];
   error: boolean;
   fetchedAt: string;
+  // True when fewer than 3 releases fell within the normal 14-day window,
+  // so the list was relaxed to a 30-day window to avoid an empty page.
+  usedFallback: boolean;
 };
