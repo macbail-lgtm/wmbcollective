@@ -215,6 +215,15 @@ export type ResourceCard = {
   buttonHref: string;
 };
 
+export type Podcast = {
+  name: string;
+  host: string;
+  category: string;
+  blurb: string;
+  appleLink: string;
+  spotifyLink: string;
+};
+
 export const CURRICULUM_PAGE = {
   header: "The Curriculum",
   subtext: "Everything you need to know",
@@ -280,6 +289,60 @@ export const CURRICULUM_PAGE = {
         "https://www.amazon.com/Master-Switch-Rise-Information-Empires/dp/0307390993",
     },
   ] as ResourceCard[],
+  booksLabel: "Books",
+  podcastsLabel: "Podcasts",
+  podcastsSubtext: "Essential listening for anyone serious about the industry",
+  podcasts: [
+    {
+      name: "The New Music Business with Ari Herstand",
+      host: "Ari Herstand",
+      category: "Music Business",
+      blurb:
+        "The best all-around music business podcast. Webby Award winner, named #1 music industry podcast by Spotify. Herstand deconstructs the brightest minds in the music industry — executives, managers, lawyers, founders, and independent artists — digging into the tools and strategies that actually work. Covers music rights, streaming, touring, AI, publishing, and management. Practical, actionable, and no fluff. Start here.",
+      appleLink:
+        "https://podcasts.apple.com/us/podcast/the-new-music-business-with-ari-herstand/id1499897111",
+      spotifyLink: "https://open.spotify.com/show/5y9jhXp42uqtgTq0FG2OFd",
+    },
+    {
+      name: "Music Business Worldwide Podcast",
+      host: "Tim Ingham",
+      category: "Industry Insider",
+      blurb:
+        "The closest thing to an insider podcast for the global music industry. MBW founder Tim Ingham interviews CEOs, label executives, and the architects of major music deals — covering catalog acquisitions, streaming economics, music M&A, and investment trends. If you want to work at an agency, private equity firm, or anywhere in entertainment investing, this is essential listening.",
+      appleLink:
+        "https://podcasts.apple.com/us/podcast/music-business-worldwide/id1017420111",
+      spotifyLink: "https://open.spotify.com/show/0JcupwhLzN6mvn4aGUgFCN",
+    },
+    {
+      name: "And The Writer Is... with Ross Golan",
+      host: "Ross Golan",
+      category: "Publishing & Songwriting",
+      blurb:
+        "The definitive podcast on songwriting and music publishing. Every week Ross Golan sits down with hit songwriters to go behind closed doors on how the music actually gets made — publishing deals, A&R, label relationships, and the creative process. Guests include Jack Antonoff, FINNEAS, Niall Horan, and hundreds more. Essential for anyone interested in publishing, A&R, or the creative side of the business.",
+      appleLink:
+        "https://podcasts.apple.com/us/podcast/and-the-writer-is-with-ross-golan/id1197924737",
+      spotifyLink: "https://open.spotify.com/show/26gzyiPD2ix1VaO1fHDKCk",
+    },
+    {
+      name: "Trapital",
+      host: "Dan Runcie",
+      category: "Strategy & Culture",
+      blurb:
+        "One of the best business podcasts covering music, media, tech, and the creator economy. Dan Runcie breaks down the strategy behind the biggest moves in music and entertainment — streaming economics, live business, catalog deals, AI, and hip-hop as a business model. Especially valuable if you want to work at WME, CAA, Spotify, or in entertainment investing. Think of it as an MBA for the culture.",
+      appleLink: "https://podcasts.apple.com/us/podcast/trapital/id1470003061",
+      spotifyLink: "https://open.spotify.com/show/50apKt6gDaI63p6J7vCypT",
+    },
+    {
+      name: "The Town with Matt Belloni",
+      host: "Matt Belloni",
+      category: "Entertainment Business",
+      blurb:
+        "Arguably the best entertainment business podcast running right now. Puck founding partner Matt Belloni takes you inside Hollywood — agencies, streaming wars, sports, music, executive moves, and the deals that shape the industry. Multiple episodes per week, all with major executives, dealmakers, and journalists. If you want a career in entertainment business broadly, this is almost required listening.",
+      appleLink:
+        "https://podcasts.apple.com/us/podcast/the-town-with-matthew-belloni/id1612131897",
+      spotifyLink: "https://open.spotify.com/show/4uXizLZjslhw7nyDPocta2",
+    },
+  ] as Podcast[],
 };
 
 export const ABOUT_PAGE = {
