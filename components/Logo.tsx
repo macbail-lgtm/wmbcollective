@@ -15,14 +15,14 @@ type LogoProps = {
 export default function Logo({ variant }: LogoProps) {
   if (variant === "nav") {
     return (
-      <Link href="/" className="flex items-center bg-white">
+      <Link href="/" className="mr-20 flex flex-shrink-0 items-center bg-white">
         <Image
           src="/images/logo.png"
           alt="WMB Collective"
           width={LOGO_WIDTH}
           height={LOGO_HEIGHT}
           priority
-          className="h-16 w-auto sm:h-20 md:max-h-[120px]"
+          className="h-9 w-auto"
         />
       </Link>
     );

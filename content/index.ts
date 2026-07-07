@@ -7,11 +7,11 @@ export type NavLink = {
 };
 
 export const NAV_LINKS: NavLink[] = [
-  { label: "The Vault", href: "/vault" },
-  { label: "Open Session", href: "/open-session" },
-  { label: "Release Radar", href: "/radar" },
-  { label: "The Curriculum", href: "/curriculum" },
-  { label: "Job Board", href: "/jobs" },
+  { label: "Vault", href: "/vault" },
+  { label: "Session", href: "/open-session" },
+  { label: "Radar", href: "/radar" },
+  { label: "Curriculum", href: "/curriculum" },
+  { label: "Jobs", href: "/jobs" },
   { label: "About", href: "/about" },
 ];
 
