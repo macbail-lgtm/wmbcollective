@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import type { Podcast } from "@/content";
 
 const STOP_WORDS = new Set(["the", "with", "and", "of", "a", "an"]);
@@ -17,14 +20,33 @@ function podcastInitials(name: string) {
 }
 
 // Row in the full-width Podcasts list on The Curriculum page.
-export default function PodcastCard({ podcast }: { podcast: Podcast }) {
+export default function PodcastCard({
+  podcast,
+  artworkUrl,
+}: {
+  podcast: Podcast;
+  artworkUrl: string;
+}) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const showImage = artworkUrl && !imageFailed;
+
   return (
     <div className="flex flex-col gap-5 border-b border-border px-2 py-8 transition-colors hover:bg-hover sm:flex-row">
-      <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center bg-navy">
-        <span className="font-display italic font-black text-white text-lg">
-          {podcastInitials(podcast.name)}
-        </span>
-      </div>
+      {showImage ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={artworkUrl}
+          alt={`${podcast.name} cover art`}
+          onError={() => setImageFailed(true)}
+          className="h-20 w-20 flex-shrink-0 rounded-lg object-cover"
+        />
+      ) : (
+        <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-lg bg-navy">
+          <span className="font-display italic font-black text-white text-lg">
+            {podcastInitials(podcast.name)}
+          </span>
+        </div>
+      )}
 
       <div className="flex-1">
         <h3 className="font-display italic font-black text-navy text-xl">

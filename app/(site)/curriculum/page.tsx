@@ -3,8 +3,10 @@ import HolyGrailCard from "@/components/HolyGrailCard";
 import ResourceCard from "@/components/ResourceCard";
 import PodcastCard from "@/components/PodcastCard";
 import { CURRICULUM_PAGE } from "@/content";
+import { getPodcastArtwork } from "@/lib/podcastArtwork";
 
 export const metadata: Metadata = { title: "The Curriculum | WMB Collective" };
+export const revalidate = 86400; // 24 hours — matches the podcast artwork cache
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -14,7 +16,9 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function CurriculumPage() {
+export default async function CurriculumPage() {
+  const artwork = await getPodcastArtwork();
+
   return (
     <main className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
       <h1 className="font-display italic font-black text-navy text-4xl sm:text-5xl">
@@ -50,7 +54,11 @@ export default function CurriculumPage() {
 
         <div className="mt-8">
           {CURRICULUM_PAGE.podcasts.map((podcast, i) => (
-            <PodcastCard key={i} podcast={podcast} />
+            <PodcastCard
+              key={i}
+              podcast={podcast}
+              artworkUrl={artwork[podcast.name] ?? ""}
+            />
           ))}
         </div>
       </section>
