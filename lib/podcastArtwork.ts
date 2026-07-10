@@ -43,15 +43,30 @@ const PODCAST_FEEDS: { name: string; feedUrl: string }[] = [
 const MAX_BYTES = 65536; // 64KB is comfortably past the channel-level tags
 
 async function fetchArtworkUrl(feedUrl: string): Promise<string> {
-  const res = await fetch(feedUrl, { cache: "no-store" });
-  if (!res.ok || !res.body) return "";
-
-  const reader = res.body.getReader();
-  const decoder = new TextDecoder();
-  let text = "";
-  let bytesRead = 0;
+  // `cache: "no-store"` would avoid Next's fetch cache entirely, but it
+  // also marks the calling route as needing dynamic rendering ("Dynamic
+  // server usage") during static generation — which broke the build. So
+  // this uses Next's normal cacheable fetch mode instead, and relies on
+  // aborting the underlying request (not just stopping local consumption)
+  // to keep the cached body small: Next tees the response to build its
+  // cache entry independently of how much the caller reads, so cancelling
+  // only *our* reader still leaves Next downloading — and attempting to
+  // cache — the entire multi-megabyte feed in the background. Aborting the
+  // whole request kills that background download too.
+  const controller = new AbortController();
 
   try {
+    const res = await fetch(feedUrl, {
+      next: { revalidate: 86400 }, // 24 hours
+      signal: controller.signal,
+    });
+    if (!res.ok || !res.body) return "";
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let text = "";
+    let bytesRead = 0;
+
     while (bytesRead < MAX_BYTES) {
       const { done, value } = await reader.read();
       if (done) break;
@@ -59,17 +74,18 @@ async function fetchArtworkUrl(feedUrl: string): Promise<string> {
       text += decoder.decode(value, { stream: true });
       if (/<itunes:image[^>]*\/>/.test(text) || text.includes("<item")) break;
     }
-  } finally {
-    reader.cancel().catch(() => {});
+    controller.abort();
+
+    const hrefMatch = text.match(/<itunes:image[^>]*\shref="([^"]+)"/);
+    if (hrefMatch) return decodeXmlEntities(hrefMatch[1]);
+
+    // Fall back to the standard RSS <image><url> tag if itunes:image wasn't
+    // found within the truncated read.
+    const imageUrlMatch = text.match(/<image>\s*<url>([^<]+)<\/url>/);
+    return imageUrlMatch ? decodeXmlEntities(imageUrlMatch[1]) : "";
+  } catch {
+    return "";
   }
-
-  const hrefMatch = text.match(/<itunes:image[^>]*\shref="([^"]+)"/);
-  if (hrefMatch) return decodeXmlEntities(hrefMatch[1]);
-
-  // Fall back to the standard RSS <image><url> tag if itunes:image wasn't
-  // found within the truncated read.
-  const imageUrlMatch = text.match(/<image>\s*<url>([^<]+)<\/url>/);
-  return imageUrlMatch ? decodeXmlEntities(imageUrlMatch[1]) : "";
 }
 
 // Regex-extracted attribute values aren't run through an XML parser, so
