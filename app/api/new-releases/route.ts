@@ -1,11 +1,15 @@
 import { NextResponse } from "next/server";
-import type { RecentRelease, RecentReleasesResponse } from "@/lib/recentReleases";
+import type { NewRelease, NewReleasesResponse } from "@/lib/newReleases";
 
-const ITUNES_RSS_URL = "https://itunes.apple.com/us/rss/topalbums/limit=50/json";
+// The spec'd source for this route was
+// https://itunes.apple.com/us/rss/newmusic/limit=25/json — that feed
+// genre doesn't exist on Apple's RSS API (confirmed 400 "Invalid RSS
+// channel name", along with several other guessed variants). "topalbums"
+// is the same real, working feed already used by /api/top-charts; this
+// route reuses it and applies the 14-day recency filter, which is exactly
+// what the previous version of this page already did successfully.
+const ITUNES_RSS_URL = "https://itunes.apple.com/us/rss/topalbums/limit=25/json";
 
-const RESULT_COUNT = 12;
-const PRIMARY_WINDOW_DAYS = 14;
-const FALLBACK_WINDOW_DAYS = 30;
 const MIN_RESULTS_BEFORE_FALLBACK = 3;
 
 type ItunesEntry = {
@@ -18,7 +22,7 @@ type ItunesEntry = {
   link?: { attributes?: { href?: string } };
 };
 
-function parseEntry(entry: ItunesEntry): RecentRelease | null {
+function parseEntry(entry: ItunesEntry): NewRelease | null {
   const id = entry.id?.attributes?.["im:id"];
   const title = entry["im:name"]?.label;
   const artist = entry["im:artist"]?.label;
@@ -26,28 +30,25 @@ function parseEntry(entry: ItunesEntry): RecentRelease | null {
   if (!id || !title || !artist) return null;
 
   const images = entry["im:image"] ?? [];
-  const coverUrl = images[2]?.label ?? images[images.length - 1]?.label ?? "";
-  const genre = entry.category?.attributes?.label ?? "";
 
   return {
     id,
     title,
     artist,
-    coverUrl,
+    coverUrl: images[2]?.label ?? images[images.length - 1]?.label ?? "",
     releaseDate: entry["im:releaseDate"]?.label ?? "",
-    format: genre,
+    genre: entry.category?.attributes?.label ?? "",
     itunesUrl: entry.link?.attributes?.href ?? "",
-    genre,
   };
 }
 
-function withinDays(release: RecentRelease, days: number, now: Date) {
+function withinLast14Days(release: NewRelease, now: Date) {
   if (!release.releaseDate) return false;
   const releaseDate = new Date(release.releaseDate);
   if (Number.isNaN(releaseDate.getTime())) return false;
-  const cutoff = new Date(now);
-  cutoff.setDate(cutoff.getDate() - days);
-  return releaseDate >= cutoff;
+  const twoWeeksAgo = new Date(now);
+  twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+  return releaseDate >= twoWeeksAgo;
 }
 
 export async function GET() {
@@ -57,7 +58,7 @@ export async function GET() {
     });
 
     if (!res.ok) {
-      return NextResponse.json<RecentReleasesResponse>({
+      return NextResponse.json<NewReleasesResponse>({
         releases: [],
         error: true,
         fetchedAt: new Date().toISOString(),
@@ -68,32 +69,25 @@ export async function GET() {
     const data = await res.json();
     const entries: ItunesEntry[] = data?.feed?.entry ?? [];
 
-    // Preserve iTunes' chart ranking — do not re-sort — so the biggest
-    // releases surface first naturally within whichever window is used.
+    // Preserve iTunes' chart ranking — do not re-sort.
     const allReleases = entries
       .map(parseEntry)
-      .filter((release): release is RecentRelease => release !== null);
+      .filter((release): release is NewRelease => release !== null);
 
     const now = new Date();
-    const recent = allReleases.filter((release) =>
-      withinDays(release, PRIMARY_WINDOW_DAYS, now)
-    );
+    const recent = allReleases.filter((release) => withinLast14Days(release, now));
 
     const usedFallback = recent.length < MIN_RESULTS_BEFORE_FALLBACK;
-    const pool = usedFallback
-      ? allReleases.filter((release) => withinDays(release, FALLBACK_WINDOW_DAYS, now))
-      : recent;
+    const releases = usedFallback ? allReleases : recent;
 
-    const releases = pool.slice(0, RESULT_COUNT);
-
-    return NextResponse.json<RecentReleasesResponse>({
+    return NextResponse.json<NewReleasesResponse>({
       releases,
       error: releases.length === 0,
       fetchedAt: new Date().toISOString(),
       usedFallback,
     });
   } catch {
-    return NextResponse.json<RecentReleasesResponse>({
+    return NextResponse.json<NewReleasesResponse>({
       releases: [],
       error: true,
       fetchedAt: new Date().toISOString(),

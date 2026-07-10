@@ -147,7 +147,7 @@ export const OPEN_SESSION_PAGE = {
 
 export const RADAR_PAGE = {
   header: "Release Radar",
-  subtext: "New music and what's coming.",
+  subtext: "New music, new drops, what's charting.",
 };
 
 export const JOBS_PAGE = {

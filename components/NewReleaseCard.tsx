@@ -1,20 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import type { RecentRelease } from "@/lib/recentReleases";
+import type { NewRelease } from "@/lib/newReleases";
 import { initials, formatReleaseDate } from "@/lib/format";
 
-// Card for the live iTunes-sourced Recent Releases section on /radar.
-export default function RecentReleaseCard({
-  release,
-}: {
-  release: RecentRelease;
-}) {
+// Card for the live Recent Releases section on /radar.
+export default function NewReleaseCard({ release }: { release: NewRelease }) {
   const [imageFailed, setImageFailed] = useState(false);
   const showImage = release.coverUrl && !imageFailed;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col border border-border transition-colors hover:bg-hover">
       <div className="relative aspect-square w-full">
         {showImage ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -33,7 +29,7 @@ export default function RecentReleaseCard({
         )}
       </div>
 
-      <div className="mt-4">
+      <div className="p-4">
         <p className="font-display italic font-black text-navy text-base">
           {release.artist}
         </p>
