@@ -9,9 +9,9 @@ export type NavLink = {
 export const NAV_LINKS: NavLink[] = [
   { label: "Vault", href: "/vault" },
   { label: "Session", href: "/open-session" },
+  { label: "Incubator", href: "/records" },
   { label: "Radar", href: "/radar" },
   { label: "Curriculum", href: "/curriculum" },
-  { label: "Incubator", href: "/records" },
   { label: "Jobs", href: "/jobs" },
   { label: "About", href: "/about" },
 ];
@@ -38,33 +38,33 @@ export const LANDING_SECTIONS: LandingSection[] = [
   },
   {
     number: "03",
+    title: "WMB Artist Incubator",
+    description: "Emerging artists, managed and developed by WMB",
+    href: "/records",
+  },
+  {
+    number: "04",
     title: "Release Radar",
     description: "Upcoming album, EP, and single releases",
     href: "/radar",
   },
   {
-    number: "04",
+    number: "05",
     title: "The Curriculum",
     description: "Books, podcasts, courses, and guides",
     href: "/curriculum",
   },
   {
-    number: "05",
+    number: "06",
     title: "Job Board",
     description: "Music and entertainment internships and roles",
     href: "/jobs",
   },
   {
-    number: "06",
+    number: "07",
     title: "About",
     description: "Who we are and what we're building",
     href: "/about",
-  },
-  {
-    number: "07",
-    title: "WMB Artist Incubator",
-    description: "Emerging artists, managed and developed by WMB",
-    href: "/records",
   },
 ];
 
