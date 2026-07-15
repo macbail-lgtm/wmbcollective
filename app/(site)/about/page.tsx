@@ -62,6 +62,21 @@ export default function AboutPage() {
       </section>
 
       <section className="mt-14">
+        <p className="font-body text-xs uppercase tracking-widest2 text-red">
+          {ABOUT_PAGE.theIncubator.title}
+        </p>
+        <p className="mt-4 max-w-3xl font-body text-base font-light leading-relaxed text-gray-500">
+          {ABOUT_PAGE.theIncubator.body}
+        </p>
+        <a
+          href={ABOUT_PAGE.theIncubator.linkHref}
+          className="mt-3 inline-block font-body text-sm text-red hover:underline"
+        >
+          {ABOUT_PAGE.theIncubator.linkText}
+        </a>
+      </section>
+
+      <section className="mt-14">
         <h2 className="font-display italic font-black text-navy text-xl sm:text-2xl">
           {ABOUT_PAGE.theClub.title}
         </h2>

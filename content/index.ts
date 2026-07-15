@@ -11,6 +11,7 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Session", href: "/open-session" },
   { label: "Radar", href: "/radar" },
   { label: "Curriculum", href: "/curriculum" },
+  { label: "Incubator", href: "/records" },
   { label: "Jobs", href: "/jobs" },
   { label: "About", href: "/about" },
 ];
@@ -58,6 +59,12 @@ export const LANDING_SECTIONS: LandingSection[] = [
     title: "About",
     description: "Who we are and what we're building",
     href: "/about",
+  },
+  {
+    number: "07",
+    title: "WMB Artist Incubator",
+    description: "Emerging artists, managed and developed by WMB",
+    href: "/records",
   },
 ];
 
@@ -345,6 +352,72 @@ export const CURRICULUM_PAGE = {
   ] as Podcast[],
 };
 
+export type Artist = {
+  name: string;
+  genre: string;
+  hometown: string;
+  bio: string;
+  photoUrl: string;
+  spotifyArtistId: string;
+  spotifyTrackId: string;
+  instagramUrl: string;
+};
+
+export const WMB_INCUBATOR = {
+  hero: {
+    title: "WMB Artist Incubator",
+    subtext: "An artist development program built by Wharton Music Business",
+    blurb:
+      "Most artists never get a fair shot — not because they lack talent, but because they lack access. The WMB Artist Incubator changes that. We plug emerging artists directly into the Wharton Music Business network — giving them the release infrastructure, industry relationships, and business knowledge that most artists spend years trying to find on their own. We're not here to sign artists and shelve them. We're here to build careers.",
+  },
+  about: {
+    label: "What We Are",
+    body: "The WMB Artist Incubator is the artist services arm of WMB Collective. We find emerging artists — from Penn's campus, Philadelphia, and beyond — and help them build the foundation for a real career in music.\n\nWe handle release strategy, positioning, and industry connections with one goal: getting our artists in front of the right people and setting them up for the next level.\n\nThis isn't a vanity label. It's a hands-on incubator run by students who understand the business and care about the music.",
+  },
+  whatWeOffer: [
+    {
+      title: "Release Strategy",
+      description: "We plan and execute your releases from concept to distribution.",
+    },
+    {
+      title: "Industry Access",
+      description:
+        "Direct connections to labels, managers, agents, and A&Rs through our network.",
+    },
+    {
+      title: "Brand Building",
+      description: "Artist identity, social strategy, and positioning built for longevity.",
+    },
+    {
+      title: "Music Business Education",
+      description:
+        "We make sure every artist we work with understands the business behind their career.",
+    },
+  ],
+  roster: {
+    label: "The Roster",
+    subtext: "Artists currently in the WMB Artist Incubator",
+    emptyTitle: "Roster coming soon.",
+    emptySubtext: "We're currently selecting our first class of artists.",
+  },
+  submit: {
+    label: "Work With Us",
+    title: "Think you're the right fit?",
+    body: "The WMB Artist Incubator works with emerging artists at any stage. If you're serious about your music and ready to work, we want to hear from you.",
+    buttonText: "Submit Your Music →",
+    buttonHref: "mailto:wmbcollective@gmail.com",
+  },
+};
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// WMB Artist Incubator Roster
+// Add artists here as they join the program
+// photoUrl: upload to /public/images/artists/
+// spotifyTrackId: get from Spotify share link →
+//   open.spotify.com/track/TRACK_ID_HERE
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export const ROSTER: Artist[] = [];
+
 export const ABOUT_PAGE = {
   header: "About",
   subtext: "The media arm of the Wharton Music Business Club",
@@ -380,6 +453,12 @@ export const ABOUT_PAGE = {
           "What's changing, who's building what's next, and how to position yourself in it.",
       },
     ],
+  },
+  theIncubator: {
+    title: "The Incubator",
+    body: "Beyond media, WMB Collective runs the WMB Artist Incubator — a hands-on artist development program that works directly with emerging musicians to build release strategy, industry connections, and long-term career foundations. We work with artists from Penn's campus, Philadelphia, and beyond.",
+    linkText: "Learn more about the WMB Artist Incubator →",
+    linkHref: "/records",
   },
   theClub: {
     title: "The Club",
